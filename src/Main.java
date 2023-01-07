@@ -1,4 +1,6 @@
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,7 +20,8 @@ public class Main {
         Bus gaz2 = new Bus("Газ", "O879", 190);
 
 
-        Driver <Bus> kirill  = new Driver<>("Иванов Кирилл Алексеевич", gaz1);
+        Driver<Bus> kirill = new Driver<>("Иванов Кирилл Алексеевич", gaz1);
+        Driver<Bus> lari = new Driver<>("Лари Иванов", gaz2);
         kirill.doPitStop(gaz1);
         Mechanic<Bus> tim = new Mechanic<>("Тимур Шалиев", "Моторс", "Только автобусы", gaz1);
         Mechanic hans = new Mechanic("Ганс Андерсон", "Красная шапочка", "Любые машины", kia2);
@@ -61,7 +64,7 @@ public class Main {
 //        kamaz2.showMaxSpeed();
 
 //        System.out.println(gaz1);
-       gaz1.doPitStop(Bus.ReasonsCommand.RSN_OIL.name());
+        gaz1.doPitStop(Bus.ReasonsCommand.RSN_OIL.name());
 //        gaz1.showBestTimeOfCircle();
 //        gaz1.showMaxSpeed();
 //        System.out.println(mercedes);
@@ -84,25 +87,33 @@ public class Main {
         auto.put(gaz2, tim);
         auto.put(kia2, hans);
         System.out.println(auto);
-    }
-        public static void checkCar (Transport... transports){
-            int count = 0;
-            for (Transport transport : transports){
-                if (!transport.passDiagnostics()){
-                    try {
-                        throw new RuntimeException(transport.getBrand() + " " + transport.getModel()+ " не прошел диагностику");
 
-                    }catch (RuntimeException e){
-                        System.out.println(e.getMessage());
-                    }
-                }else {
-                    count++;
-                }
-            }
-            System.out.println("Диагностику прошли " + count + " iz " + transports.length + " auto ");
+        Set<Driver> drivers = new HashSet<>();
+        drivers.add(kirill);
+        drivers.add(lari);
+
+        for (Driver driver : drivers) {
+            System.out.println(drivers);
         }
+    }
 
 
+    public static void checkCar(Transport... transports) {
+        int count = 0;
+        for (Transport transport : transports) {
+            if (!transport.passDiagnostics()) {
+                try {
+                    throw new RuntimeException(transport.getBrand() + " " + transport.getModel() + " не прошел диагностику");
+
+                } catch (RuntimeException e) {
+                    System.out.println(e.getMessage());
+                }
+            } else {
+                count++;
+            }
+        }
+        System.out.println("Диагностику прошли " + count + " iz " + transports.length + " auto ");
+    }
 
 
 }
